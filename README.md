@@ -127,4 +127,4 @@ Pull requests are welcome! For major changes, please open an issue first.
 ## 📧 Contact
 
 Developed by **Melike Nur Özün**
-- 📩 [Email](melikenurozn@gmail.com)
+- 📩 [melikenurozun@gmail.com](mailto:melikenurozun@gmail.com)
