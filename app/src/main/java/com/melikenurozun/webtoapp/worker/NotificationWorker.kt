@@ -8,20 +8,24 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.melikenurozun.webtoapp.MainActivity
 import com.melikenurozun.webtoapp.R
 import com.melikenurozun.webtoapp.data.local.DataStoreManager
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 
-class NotificationWorker(
-    private val context: Context,
-    params: WorkerParameters
+@HiltWorker
+class NotificationWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted params: WorkerParameters,
+    private val dataStoreManager: DataStoreManager
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        val dataStoreManager = DataStoreManager(context)
         val notificationsEnabled = dataStoreManager.notificationsEnabled.first()
 
         if (notificationsEnabled) {
@@ -52,7 +56,7 @@ class NotificationWorker(
         )
 
         val builder = NotificationCompat.Builder(context, "DAILY_NEWS")
-            .setSmallIcon(android.R.drawable.ic_dialog_info) // Varsayılan ikon, özel ikon varsa onu kullan
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("BBC News")
             .setContentText("Check out today's headline news!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -62,7 +66,7 @@ class NotificationWorker(
         try {
             NotificationManagerCompat.from(context).notify(1001, builder.build())
         } catch (e: SecurityException) {
-            // İzin verilmemişse hata verebilir
+            // Notification permission not granted — silently skip
         }
     }
 }

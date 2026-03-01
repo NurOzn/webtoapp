@@ -1,12 +1,12 @@
 package com.melikenurozun.webtoapp.data.remote
 
-import com.melikenurozun.webtoapp.data.remote.model.RssFeed
+import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface BbcNewsService {
     @GET("{category}/rss.xml")
-    suspend fun getNewsFeed(@Path("category", encoded = true) category: String = "news"): RssFeed
+    suspend fun getNewsFeed(@Path("category", encoded = true) category: String = "news"): ResponseBody
 }
 
 // BBC News Kategorileri

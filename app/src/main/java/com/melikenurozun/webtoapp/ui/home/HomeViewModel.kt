@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
 
     val categories: List<Category> = NewsCategories.allCategories
 
-    // Önceki Flow job'ını saklayarak iptal edebiliriz
+    // Keep reference to cancel previous flow job when category changes
     private var newsJob: Job? = null
 
     init {
@@ -52,7 +52,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getNews() {
-        // Önceki job'ı iptal et
         newsJob?.cancel()
         
         val newsFlow = getNewsUseCase(_selectedCategory.value.id)
@@ -110,7 +109,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun selectCategory(category: Category) {
-        // Eşitlik kontrolü kaldırıldı - her zaman çalışacak
         _selectedCategory.value = category
         _searchQuery.value = ""
         _state.value = NewsState.Loading

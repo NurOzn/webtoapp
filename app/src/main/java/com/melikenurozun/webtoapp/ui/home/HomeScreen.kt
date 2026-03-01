@@ -60,7 +60,7 @@ fun HomeScreen(
     var isRefreshing by remember { mutableStateOf(false) }
     val pullToRefreshState = rememberPullToRefreshState()
 
-    // Kategori değiştiğinde ViewModel'i güncelle
+    // Update ViewModel when selected category changes
     LaunchedEffect(selectedCategoryId) {
         val category = NewsCategories.allCategories.find { it.id == selectedCategoryId } 
             ?: NewsCategories.allCategories.first()

@@ -101,7 +101,7 @@ fun MainScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     
-    // *** Kategori state'i burada tutulacak ***
+    // Category selection state
     var currentCategoryId by remember { mutableStateOf("news") }
     
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -174,9 +174,8 @@ fun MainScreen(
                             selected = currentCategoryId == category.id && currentRoute?.startsWith("home") == true,
                             onClick = {
                                 scope.launch { drawerState.close() }
-                                // Kategoriyi güncelle
                                 currentCategoryId = category.id
-                                // Home'a git (eğer değilse)
+                                // Navigate to home if not already there
                                 if (currentRoute?.startsWith("home") != true) {
                                     navController.navigate("home_screen") {
                                         popUpTo(navController.graph.findStartDestination().id) {
@@ -295,7 +294,6 @@ fun MainScreen(
             }
             
             composable(route = "home_screen") {
-                // currentCategoryId doğrudan kullanılıyor, navigation argümanı değil
                 HomeScreen(
                     selectedCategoryId = currentCategoryId,
                     onNavigateToDetail = { article ->

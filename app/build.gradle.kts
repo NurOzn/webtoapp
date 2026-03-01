@@ -75,8 +75,6 @@ dependencies {
     // Retrofit & Network
     implementation(libs.retrofit)
     implementation(libs.okhttp)
-    implementation(libs.simplexml)
-    implementation(libs.simplexml.retrofit.converter)
 
     // Compose BOM
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))
@@ -98,6 +96,10 @@ dependencies {
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // Hilt + WorkManager
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    ksp("androidx.hilt:hilt-compiler:1.2.0")
     
     // Accompanist Permissions
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")

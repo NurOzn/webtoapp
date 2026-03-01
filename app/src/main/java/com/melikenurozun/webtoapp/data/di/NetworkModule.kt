@@ -7,9 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import org.simpleframework.xml.convert.AnnotationStrategy
-import org.simpleframework.xml.core.Persister
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -28,19 +25,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideSimpleXmlConverter(): SimpleXmlConverterFactory {
-        val strategy = AnnotationStrategy()
-        val serializer = Persister(strategy)
-        return SimpleXmlConverterFactory.create(serializer)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, simpleXmlConverter: SimpleXmlConverterFactory): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://feeds.bbci.co.uk/")
             .client(okHttpClient)
-            .addConverterFactory(simpleXmlConverter)
             .build()
     }
 
